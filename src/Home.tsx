@@ -1,5 +1,5 @@
 import { useState } from "react";
-import LengthContent from "./components/LengthComponent";
+import LengthContent from "./components/LengthComponents/LengthComponent";
 
 function Home() {
     const [display, setDisplay] = useState(false);

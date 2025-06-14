@@ -7,7 +7,11 @@ function LengthComponent() {
     const [selectedValue, setSelectedValue] = useState("");
 
     const handleClick = () => {
-        navigate("/result/meters", { state: { value: inputValue } });
+        if (inputValue === "") return;
+        if (selectedValue === "foot")
+            navigate("/result/meters", { state: { value: inputValue } });
+        else if (selectedValue === "meters")
+            navigate("/result/foot", { state: { value: inputValue } });
     };
 
     const handleInputChange = (e: {
@@ -29,7 +33,7 @@ function LengthComponent() {
                     Type a value to convert ✨
                 </p>
                 <input
-                    type="text"
+                    type="number"
                     placeholder="Ex: 10"
                     className="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-gray-200 text-gray-800 placeholder-gray-400 transition mt-2"
                     onChange={handleInputChange}
@@ -38,37 +42,39 @@ function LengthComponent() {
             </div>
             <form>
                 <div className="mt-5">
-                    <p className="mb-1 font-semibold">Converter from:</p>
+                    <p className="mb-1 font-semibold">Convert from:</p>
                     <input
                         type="radio"
-                        value="from-option1"
-                        checked={selectedValue === "option1"}
+                        value="foot"
+                        checked={selectedValue === "foot"}
                         onChange={handleRadioCHange}
-                        name="from-option1"
+                        name="foot"
                     />{" "}
                     <label>Ft (Foot)</label>
                     <input
                         type="radio"
-                        name="from-option2"
+                        name="meters"
                         className="ml-2"
-                        value="from-option2"
-                        checked={selectedValue === "option2"}
+                        value="meters"
+                        checked={selectedValue === "meters"}
                         onChange={handleRadioCHange}
                     />{" "}
                     <label>M (Meters)</label>
                 </div>
             </form>
-            <form>
-                <div className="mt-5">
-                    <p className="mb-1 font-semibold">To:</p>
-                    <input type="radio" name="to" /> <label>Ft (Foot)</label>
-                    <input type="radio" className="ml-2" name="to" />{" "}
-                    <label>M (Meters)</label>
-                </div>
-            </form>
+
+            <p className="mt-5 font-semibold">
+                To:{" "}
+                {selectedValue === "meters"
+                    ? "Foot"
+                    : selectedValue === "foot"
+                    ? "Meters"
+                    : "Select the length measurement"}
+            </p>
+
             <div className="mt-20 flex justify-center">
                 <button
-                    className="bg-gradient-to-r from-amber-400 to-yellow-300 p-3 rounded-2xl hover:from-amber-300 hover:to-yellow-200 hover:cursor-pointer font-bold text-lg shadow"
+                    className="mt-5 bg-gradient-to-r from-amber-400 to-yellow-300 p-3 rounded-2xl hover:from-amber-300 hover:to-yellow-200 hover:cursor-pointer font-bold text-lg shadow"
                     onClick={handleClick}
                     type="button"
                 >
